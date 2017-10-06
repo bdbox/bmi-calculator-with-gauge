@@ -8,10 +8,9 @@ class App extends Component {
 	constructor() {
 		super()
 		this.state = {
-			w: 60,
-			h: 68,
-			bmi: null,
-			hidden: true
+			w: 142,
+			h: 66,
+			bmi: 22.9
 		}
 	}
 	
@@ -24,7 +23,7 @@ class App extends Component {
 				<section className="App-intro">
 					<Gauge 
 						label="BMI Calculator" 
-						value={this.state.h ? this.state.h : 40} 
+						value={this.state.bmi} 
 					/>
 					<Controls 
 						onWChange={this.onWChange.bind(this)} 
@@ -37,18 +36,29 @@ class App extends Component {
 		)
 	}
 	
-	onWChange() {
-		let val = document.getElementById('weightInput').value		
+	onWChange = () => {
+		let valW = document.getElementById('weightInput').value	
+		let valH = document.getElementById('heightInput').value		
 		this.setState({
-			w: val
+			w: valW,
+			bmi: this.calcBmi(valW, valH)
 		})	
 	}
 	
-	onHChange() {
-		let val = document.getElementById('heightInput').value
+	onHChange = () => {
+		let valW = document.getElementById('weightInput').value	
+		let valH = document.getElementById('heightInput').value
 		this.setState({
-			h: val
+			h: valH,
+			bmi: this.calcBmi(valW, valH)
 		})	
+	}
+	
+	calcBmi = (w, h) => {
+		let kg = w * 0.45359237
+		let m = h * 0.0254
+		
+		return Math.floor(kg / m / m * 10) / 10;
 	}
 }
 
